@@ -1,13 +1,6 @@
-//
-//   Core Framework - Script file
-//
-//   @license    MIT (https://mit-license.org/)
-//   @author     Louis Ouellet <louis@laswitchtech.com>
-//
-
 const DevelopmentRequest = function(indicator){
     $.ajax({
-        url: '/endpoint.php/dev/status',
+        url: '/api/dev/status',
         type: 'GET',dataType: 'json',
         success: function(response) {
             if (response.status) {

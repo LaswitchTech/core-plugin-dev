@@ -1,10 +1,3 @@
-<!--
-  Core Framework - Widget File
-
-  @license    MIT (https://mit-license.org/)
-  @author     Louis Ouellet <louis@laswitchtech.com>
--->
-
 <!-- ======= Dev ======= -->
 <?php if($this->Auth->isAuthorized('Developer',1)): ?>
     <li id="devWidget" class="nav-item dropdown">
@@ -177,7 +170,7 @@
                         case 'development':
                             // Ajax Request
                             $.ajax({
-                                url: '/endpoint.php/dev/'+value,
+                                url: '/api/dev/'+value,
                                 type: 'GET',dataType: 'json',
                                 success: function(response) {
                                     // Update the badge text
@@ -198,7 +191,7 @@
                         case 'maintenance':
                             // Ajax Request
                             $.ajax({
-                                url: '/endpoint.php/maintenance/'+value,
+                                url: '/api/maintenance/'+value,
                                 type: 'GET',dataType: 'json',
                                 success: function(response) {
                                     // Update the badge text
@@ -219,7 +212,7 @@
                         case 'installer':
                             // Ajax Request
                             $.ajax({
-                                url: '/endpoint.php/installer/'+value,
+                                url: '/api/installer/'+value,
                                 type: 'GET',dataType: 'json',
                                 success: function(response) {
                                     // Update the badge text
@@ -240,7 +233,7 @@
                         case 'logger':
                             // Ajax Request
                             $.ajax({
-                                url: '/endpoint.php/logger/set?level='+value,
+                                url: '/api/logger/set?level='+value,
                                 type: 'GET',dataType: 'json',
                                 success: function(response) {
                                     // Update the badge text
