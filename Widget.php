@@ -1,6 +1,6 @@
 <!-- ======= Dev ======= -->
 <?php if($this->Auth->isAuthorized('Developer',1)): ?>
-    <li id="devWidget" class="nav-item dropdown">
+    <div id="devWidget" class="nav-item dropdown">
         <button class="nav-link text-decoration-none py-2 animate-pulse-hover" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
             <i class="fs-4 bi bi-tools" style="height: 2.25rem !important;width: 1.5rem !important"></i>
         </button>
@@ -152,7 +152,7 @@
                 </ul>
             </li>
         </ul>
-    </li>
+    </div>
     <script>
         $(document).ready(function(){
             const widget = $('#devWidget');
