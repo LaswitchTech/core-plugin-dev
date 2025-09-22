@@ -4,13 +4,12 @@
         <button class="nav-link text-decoration-none py-2 animate-pulse-hover" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
             <i class="fs-4 bi bi-tools" style="height: 2.25rem !important;width: 1.5rem !important"></i>
         </button>
-        <ul class="dropdown-menu dropdown-menu-end" style="min-width:400px;max-width:500px">
-            <li>
+        <ul class="dropdown-menu dropdown-menu-end">
+            <div>
                 <h5 class="py-2 px-3 m-0 cursor-default d-flex justify-content-center align-items-center">
                     <span><?= $this->Locale->get('Developer Tools') ?></span>
                 </h5>
-            </li>
-            <li><hr class="dropdown-divider mt-0"></li>
+            </div>
             <?php foreach($this->Builder->menu('developer') as $route => $nav): ?>
                 <li>
                     <a class="dropdown-item" href="<?= $nav['link'] ?>">
@@ -19,9 +18,6 @@
                     </a>
                 </li>
             <?php endforeach; ?>
-            <?php if(count($this->Builder->menu('developer')) > 0): ?>
-                <li><hr class="dropdown-divider"></li>
-            <?php endif; ?>
             <li class="dropdown-submenu dropstart">
                 <button type="button" class="dropdown-item" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-gear me-1"></i>
@@ -169,110 +165,98 @@
                     switch(action){
                         case 'development':
                             // Ajax Request
-                            $.ajax({
-                                url: '/api/dev/'+value,
-                                type: 'GET',dataType: 'json',
-                                success: function(response) {
-                                    // Update the badge text
-                                    switch(value){
-                                        case 'on':
-                                            widget.find('[data-label="development"]').removeClass('text-bg-danger').addClass('text-bg-success');
-                                            widget.find('[data-label="development"]').text('<?= $this->Locale->get('On'); ?>');
-                                            break;
-                                        case 'off':
-                                            widget.find('[data-label="development"]').removeClass('text-bg-success').addClass('text-bg-danger');
-                                            widget.find('[data-label="development"]').text('<?= $this->Locale->get('Off'); ?>');
-                                            break;
-                                    }
-                                    return;
+                            API.endpoint('/dev/'+value).execute(function(response){
+
+                                // Update the badge text
+                                switch(value){
+                                    case 'on':
+                                        widget.find('[data-label="development"]').removeClass('text-bg-danger').addClass('text-bg-success');
+                                        widget.find('[data-label="development"]').text('<?= $this->Locale->get('On'); ?>');
+                                        break;
+                                    case 'off':
+                                        widget.find('[data-label="development"]').removeClass('text-bg-success').addClass('text-bg-danger');
+                                        widget.find('[data-label="development"]').text('<?= $this->Locale->get('Off'); ?>');
+                                        break;
                                 }
                             });
+                            return;
                             break;
                         case 'maintenance':
                             // Ajax Request
-                            $.ajax({
-                                url: '/api/maintenance/'+value,
-                                type: 'GET',dataType: 'json',
-                                success: function(response) {
-                                    // Update the badge text
-                                    switch(value){
-                                        case 'on':
-                                            widget.find('[data-label="maintenance"]').removeClass('text-bg-danger').addClass('text-bg-success');
-                                            widget.find('[data-label="maintenance"]').text('<?= $this->Locale->get('On'); ?>');
-                                            break;
-                                        case 'off':
-                                            widget.find('[data-label="maintenance"]').removeClass('text-bg-success').addClass('text-bg-danger');
-                                            widget.find('[data-label="maintenance"]').text('<?= $this->Locale->get('Off'); ?>');
-                                            break;
-                                    }
-                                    return;
+                            API.endpoint('/maintenance/'+value).execute(function(response){
+
+                                // Update the badge text
+                                switch(value){
+                                    case 'on':
+                                        widget.find('[data-label="maintenance"]').removeClass('text-bg-danger').addClass('text-bg-success');
+                                        widget.find('[data-label="maintenance"]').text('<?= $this->Locale->get('On'); ?>');
+                                        break;
+                                    case 'off':
+                                        widget.find('[data-label="maintenance"]').removeClass('text-bg-success').addClass('text-bg-danger');
+                                        widget.find('[data-label="maintenance"]').text('<?= $this->Locale->get('Off'); ?>');
+                                        break;
                                 }
                             });
+                            return;
                             break;
                         case 'installer':
                             // Ajax Request
-                            $.ajax({
-                                url: '/api/installer/'+value,
-                                type: 'GET',dataType: 'json',
-                                success: function(response) {
-                                    // Update the badge text
-                                    switch(value){
-                                        case 'on':
-                                            widget.find('[data-label="installer"]').removeClass('text-bg-success').addClass('text-bg-danger');
-                                            widget.find('[data-label="installer"]').text('<?= $this->Locale->get('Off'); ?>');
-                                            break;
-                                        case 'off':
-                                            widget.find('[data-label="installer"]').removeClass('text-bg-danger').addClass('text-bg-success');
-                                            widget.find('[data-label="installer"]').text('<?= $this->Locale->get('On'); ?>');
-                                            break;
-                                    }
-                                    return;
+                            API.endpoint('/installer/'+value).execute(function(response){
+
+                                // Update the badge text
+                                switch(value){
+                                    case 'on':
+                                        widget.find('[data-label="installer"]').removeClass('text-bg-success').addClass('text-bg-danger');
+                                        widget.find('[data-label="installer"]').text('<?= $this->Locale->get('Off'); ?>');
+                                        break;
+                                    case 'off':
+                                        widget.find('[data-label="installer"]').removeClass('text-bg-danger').addClass('text-bg-success');
+                                        widget.find('[data-label="installer"]').text('<?= $this->Locale->get('On'); ?>');
+                                        break;
                                 }
                             });
+                            return;
                             break;
                         case 'logger':
                             // Ajax Request
-                            $.ajax({
-                                url: '/api/logger/set?level='+value,
-                                type: 'GET',dataType: 'json',
-                                success: function(response) {
-                                    // Update the badge text
-                                    widget.find('[data-label="logger"]')
-                                        .removeClass('text-bg-secondary')
-                                        .removeClass('text-bg-danger')
-                                        .removeClass('text-bg-warning')
-                                        .removeClass('text-bg-success')
-                                        .removeClass('text-bg-info')
-                                        .removeClass('text-bg-dark');
-                                    switch(value){
-                                        case 0:
-                                            widget.find('[data-label="logger"]').addClass('text-bg-secondary');
-                                            widget.find('[data-label="logger"]').text('<?= $this->Locale->get('Disable'); ?>');
-                                            break;
-                                        case 1:
-                                            widget.find('[data-label="logger"]').addClass('text-bg-danger');
-                                            widget.find('[data-label="logger"]').text('<?= $this->Locale->get('Error'); ?>');
-                                            break;
-                                        case 2:
-                                            widget.find('[data-label="logger"]').addClass('text-bg-warning');
-                                            widget.find('[data-label="logger"]').text('<?= $this->Locale->get('Warning'); ?>');
-                                            break;
-                                        case 3:
-                                            widget.find('[data-label="logger"]').addClass('text-bg-success');
-                                            widget.find('[data-label="logger"]').text('<?= $this->Locale->get('Success'); ?>');
-                                            break;
-                                        case 4:
-                                            widget.find('[data-label="logger"]').addClass('text-bg-info');
-                                            widget.find('[data-label="logger"]').text('<?= $this->Locale->get('Info'); ?>');
-                                            break;
-                                        default:
-                                            widget.find('[data-label="logger"]').addClass('text-bg-dark');
-                                            widget.find('[data-label="logger"]').text('<?= $this->Locale->get('Debug'); ?>');
-                                            break;
-                                    }
-                                    return;
+                            API.endpoint('/logger/set?level='+value).execute(function(response){
+
+                                // Update the badge text
+                                widget.find('[data-label="logger"]')
+                                    .removeClass('text-bg-secondary')
+                                    .removeClass('text-bg-danger')
+                                    .removeClass('text-bg-warning')
+                                    .removeClass('text-bg-success')
+                                    .removeClass('text-bg-info')
+                                    .removeClass('text-bg-dark');
+                                switch(value){
+                                    case 0:
+                                        widget.find('[data-label="logger"]').addClass('text-bg-secondary');
+                                        widget.find('[data-label="logger"]').text('<?= $this->Locale->get('Disable'); ?>');
+                                        break;
+                                    case 1:
+                                        widget.find('[data-label="logger"]').addClass('text-bg-danger');
+                                        widget.find('[data-label="logger"]').text('<?= $this->Locale->get('Error'); ?>');
+                                        break;
+                                    case 2:
+                                        widget.find('[data-label="logger"]').addClass('text-bg-warning');
+                                        widget.find('[data-label="logger"]').text('<?= $this->Locale->get('Warning'); ?>');
+                                        break;
+                                    case 3:
+                                        widget.find('[data-label="logger"]').addClass('text-bg-success');
+                                        widget.find('[data-label="logger"]').text('<?= $this->Locale->get('Success'); ?>');
+                                        break;
+                                    case 4:
+                                        widget.find('[data-label="logger"]').addClass('text-bg-info');
+                                        widget.find('[data-label="logger"]').text('<?= $this->Locale->get('Info'); ?>');
+                                        break;
+                                    default:
+                                        widget.find('[data-label="logger"]').addClass('text-bg-dark');
+                                        widget.find('[data-label="logger"]').text('<?= $this->Locale->get('Debug'); ?>');
+                                        break;
                                 }
                             });
+                            return;
                             break;
                     }
                 });
