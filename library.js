@@ -1,4 +1,6 @@
 API.success(function(response, endpoint){
+    if(typeof response.app === 'undefined') return;
+    if(typeof response.app.development === 'undefined') return;
     if(response.app.development){
         if(!$('i[data-dev-mode]').length){
             $(document.createElement('i')).attr({"data-dev-mode": response.app.development,"class": "position-fixed start-50 translate-middle-x bi bi-gear-wide text-info animate-fade", "style": "z-index:9999;font-size:5rem;bottom: 64px;"}).prependTo('body');
